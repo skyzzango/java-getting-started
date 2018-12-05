@@ -1,0 +1,36 @@
+server:
+  port: ${PORT:8080}
+
+spring:
+  datasource:
+    url: ${JDBC_DATABASE_URL:jdbc:postgresql://localhost:5432/trycatchmall}
+    hikari:
+      connection-timeout: 30000
+      maximum-pool-size: 10
+    username: ${JDBC_DATABASE_USERNAME:iu}
+    password: ${JDBC_DATABASE_PASSWORD:iu1004}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    database: postgresql
+    show-sql: true
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    open-in-view: true
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+
+  thymeleaf:
+    mode: HTML
+
+  profiles:
+    active: production
+
+logging:
+  level:
+    org.springframeword: INFO

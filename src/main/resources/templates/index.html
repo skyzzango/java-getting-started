@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'index')}">
+
+<body>
+
+<!-- Section -->
+<section>
+	<header class="major">
+		<h2>Ipsum sed dolor</h2>
+	</header>
+	<div class="posts">
+		<article th:each="product : ${products}">
+			<a href="#" class="image"><img th:src="/images/pic10" alt=""/></a>
+			<h3 th:text="${product.name}"></h3>
+			<p th:text="${product.description}"></p>
+			<ul class="actions">
+				<li><a th:href="'/product/' + ${product.id}" href="#" class="button">More</a></li>
+			</ul>
+		</article>
+	</div>
+</section>
+
+</body>
+</html>

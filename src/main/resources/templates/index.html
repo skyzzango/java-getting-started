@@ -6,16 +6,20 @@
 <!-- Section -->
 <section>
 	<header class="major">
-		<h2>Ipsum sed dolor</h2>
+		<h2>Women</h2>
 	</header>
 	<div class="posts">
 		<article th:each="product : ${products}">
-			<a href="#" class="image"><img th:src="${product.image}" alt=""/></a>
-			<h3 th:text="${product.name}"></h3>
-			<p th:text="${product.description}"></p>
-			<ul class="actions">
-				<li><a th:href="'/product/' + ${product.id}" href="#" class="button">More</a></li>
-			</ul>
+			<a th:href="'/product/details/' + ${product.id}" class="image">
+				<img th:src="${product.image}" alt=""/>
+			</a>
+			<div class="col-6 col-12-small">
+				<ul class="actions stacked">
+					<li>
+						<a th:href="'/product/details/' + ${product.id}" th:text="${product.name}" class="button fit"></a>
+					</li>
+				</ul>
+			</div>
 		</article>
 	</div>
 </section>

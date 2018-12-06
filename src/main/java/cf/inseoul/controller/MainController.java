@@ -30,6 +30,11 @@ public class MainController {
 		return "redirect:/";
 	}
 
+	@GetMapping("/editorial")
+	public String editorial() {
+		return "editorial";
+	}
+
 	@GetMapping("/generic")
 	public String generic() {
 		return "generic";

@@ -26,7 +26,7 @@ public class Image implements Serializable {
 	@Column(nullable = false)
 	private Long productId;
 
-	@Column(length = 144, nullable = false)
+	@Column(nullable = false)
 	private String name;
 
 	@Column(nullable = false)

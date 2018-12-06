@@ -33,4 +33,4 @@ spring:
 
 logging:
   level:
-    org.springframeword: INFO
+    org.springframeword: debug

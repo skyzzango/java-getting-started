@@ -23,10 +23,10 @@ public class Product implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(length = 144, nullable = false)
+	@Column(nullable = false)
 	private String name;
 
-	@Column(nullable = false)
+	@Column(length = 99999, nullable = false)
 	private String description;
 
 	@Column(nullable = false)

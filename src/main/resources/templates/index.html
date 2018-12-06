@@ -10,7 +10,7 @@
 	</header>
 	<div class="posts">
 		<article th:each="product : ${products}">
-			<a href="#" class="image"><img th:src="/images/pic10" alt=""/></a>
+			<a href="#" class="image"><img th:src="${product.image}" alt=""/></a>
 			<h3 th:text="${product.name}"></h3>
 			<p th:text="${product.description}"></p>
 			<ul class="actions">

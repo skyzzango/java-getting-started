@@ -1,6 +1,6 @@
 package cf.inseoul.controller;
 
-import cf.inseoul.commons.util.ImageUploadUtils;
+import cf.inseoul.commons.util.FileUploadUtils;
 import cf.inseoul.model.Image;
 import cf.inseoul.repository.ImageRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -38,7 +38,7 @@ public class ImageController {
 	public ResponseEntity<String> uploadFile(MultipartFile file, HttpServletRequest request) {
 		ResponseEntity<String> entity;
 		try {
-			String savedFilePath = ImageUploadUtils.uploadFile(file, request);
+			String savedFilePath = FileUploadUtils.uploadFile(file, request);
 			entity = new ResponseEntity<>(savedFilePath, HttpStatus.CREATED);
 		} catch (Exception e) {
 			log.error("exception: {}", e);
@@ -51,8 +51,8 @@ public class ImageController {
 	@GetMapping(value = "/image/display")
 	public ResponseEntity<byte[]> displayFile(String fileName, HttpServletRequest request) {
 
-		HttpHeaders httpHeaders = ImageUploadUtils.getHttpHeaders(fileName); // Http 헤더 설정 가져오기
-		String rootPath = ImageUploadUtils.getRootPath(fileName, request); // 업로드 기본경로 경로
+		HttpHeaders httpHeaders = FileUploadUtils.getHttpHeaders(fileName); // Http 헤더 설정 가져오기
+		String rootPath = FileUploadUtils.getRootPath(fileName, request); // 업로드 기본경로 경로
 
 		ResponseEntity<byte[]> entity;
 
@@ -72,7 +72,7 @@ public class ImageController {
 		ResponseEntity<String> entity;
 
 		try {
-			ImageUploadUtils.deleteFile(fileName, request);
+			FileUploadUtils.deleteFile(fileName, request);
 			imageRepository.deleteByImageName(fileName);
 			entity = new ResponseEntity<>("DELETED", HttpStatus.OK);
 		} catch (Exception e) {
@@ -109,7 +109,7 @@ public class ImageController {
 
 		try {
 			for (String fileName : files)
-				ImageUploadUtils.deleteFile(fileName, request);
+				FileUploadUtils.deleteFile(fileName, request);
 			entity = new ResponseEntity<>("DELETED", HttpStatus.OK);
 		} catch (Exception e) {
 			log.error("exception: {}", e);

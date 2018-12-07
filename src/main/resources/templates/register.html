@@ -6,60 +6,71 @@
 <!-- Section -->
 <section>
 	<header class="major">
-		<h3><small><i class="far fa-edit"></i></small> 상품 등록</h3>
+		<h3>
+			<small><i class="far fa-edit"></i></small>
+			상품 등록
+		</h3>
 	</header>
 	<div class="box">
 		<form method="post" action="/product/register" enctype="multipart/form-data">
 			<div class="row gtr-uniform">
 				<!-- Break -->
 				<div class="col-4">
-					<select name="categoryMain" id="categoryMain" class="main_cate">
-						<option value="카테고리 없음">- Category -</option>
-						<option value="상의">Top</option>
-						<option value="하의">Bottom</option>
-						<option value="아우터">Outer</option>
-						<option value="신발">Shoes</option>
-					</select>
+					<label>
+						<select name="categoryMain" class="main_cate">
+							<option value="카테고리 없음">- Category -</option>
+							<option value="상의">Top</option>
+							<option value="하의">Bottom</option>
+							<option value="아우터">Outer</option>
+							<option value="신발">Shoes</option>
+						</select>
+					</label>
 				</div>
 				<div>
-					<select id="categorySub" class="sub_cate sub_cate1">
-						<option value="상의">: : : : : : top : : : : : :</option>
-						<option value="티셔츠">T-Shirts</option>
-						<option value="블라우스/셔츠">Blouse/Shirts</option>
-						<option value="니트/가디건">Knit/Cardigan</option>
-					</select>
+					<label>
+						<select name="categorySub" class="sub_cate sub_cate1">
+							<option value="상의">: : : : : : top : : : : : :</option>
+							<option value="티셔츠">T-Shirts</option>
+							<option value="블라우스/셔츠">Blouse/Shirts</option>
+							<option value="니트/가디건">Knit/Cardigan</option>
+						</select>
+					</label>
 				</div>
 				<div>
-					<select id="categorySub" class="sub_cate sub_cate2">
-						<option value="하의">: : : : : : : bottom : : : : : :</option>
-						<option value="바지">Pants</option>
-						<option value="스커트">Skirt</option>
-					</select>
+					<label>
+						<select name="categorySub" class="sub_cate sub_cate2">
+							<option value="하의">: : : : : : : bottom : : : : : :</option>
+							<option value="바지">Pants</option>
+							<option value="스커트">Skirt</option>
+						</select>
+					</label>
 				</div>
 				<div>
-					<select id="categorySub" class="sub_cate sub_cate3">
-						<option value="아우터">: : : : : : : outer : : : : : :</option>
-						<option value="재킷">Jacket</option>
-						<option value="코트">Coat</option>
-						<option value="점퍼">Jumper</option>
-					</select>
+					<label>
+						<select name="categorySub" class="sub_cate sub_cate3">
+							<option value="아우터">: : : : : : : outer : : : : : :</option>
+							<option value="재킷">Jacket</option>
+							<option value="코트">Coat</option>
+							<option value="점퍼">Jumper</option>
+						</select>
+					</label>
 				</div>
 				<div>
-					<select id="categorySub" class="sub_cate sub_cate4">
-						<option value="신발">: : : : : : : shoes : : : : : :</option>
-						<option value="스니커즈/운동화">Sneakers</option>
-						<option value="구두/부츠/워커">Boots</option>
-						<option value="단화">Low Shoes</option>
-						<option value="샌들">Sandal</option>
-
-					</select>
+					<label>
+						<select name="categorySub" class="sub_cate sub_cate4">
+							<option value="신발">: : : : : : : shoes : : : : : :</option>
+							<option value="스니커즈/운동화">Sneakers</option>
+							<option value="구두/부츠/워커">Boots</option>
+							<option value="단화">Low Shoes</option>
+							<option value="샌들">Sandal</option>
+						</select>
+					</label>
 				</div>
 
 				<!-- Break -->
 				<div class="col-12">
-					<input type="text" name="name" id="name" value="" placeholder="상품명"/>
+					<input type="text" name="productName" id="name" placeholder="상품명"/>
 				</div>
-
 
 				<!-- 파일 업로드 -->
 				<div class="col-4 file preview">
@@ -68,25 +79,26 @@
 				</div>
 
 				<div class="col-8 file">
-					<button class="small primary fileUploadBtn" value="upload">대표 이미지 업로드</button>
-					<input type="file" class="small fileUpload" name="file" id="file"/>
+					<button class="small primary fileUploadBtn">대표 이미지 업로드</button>
+					<input type="file" class="small fileUpload" name="file"/>
 					<span class="filename"></span>
 				</div>
 
 				<!-- Break -->
 				<div class="col-3">
-					<input type="text" name="price" id="price" value="" placeholder="가격"/>
+					<input type="number" name="price" id="price" placeholder="가격"/>
 				</div>
 
 				<div class="col-3">
-					<label for="price">원</label>
+					<label for="price"> 원</label>
 				</div>
+
 				<div class="col-6"></div>
 
 				<!-- Break -->
 				<script th:src="@{https://cdn.ckeditor.com/4.11.1/standard-all/ckeditor.js}"></script>
 				<div class="col-12">
-					<textarea name="content" id="content" placeholder="Enter your message" rows="6"></textarea>
+					<textarea name="description" id="content" placeholder="Enter your message" rows="6"></textarea>
 				</div>
 
 				<!-- Break -->

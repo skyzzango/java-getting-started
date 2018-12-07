@@ -7,51 +7,45 @@ import cf.inseoul.model.Image;
 import cf.inseoul.model.Product;
 import cf.inseoul.repository.ProductRepository;
 import cf.inseoul.service.ImageService;
-import cf.inseoul.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.io.IOException;
 
 @Controller
 public class ProductController {
 
-	private final ProductService productService;
 	private final ProductRepository productRepository;
 	private final ImageService imageService;
 
 	@Autowired
-	public ProductController(ProductService productService, ProductRepository productRepository, ImageService imageService) {
-		this.productService = productService;
+	public ProductController(ProductRepository productRepository, ImageService imageService) {
 		this.productRepository = productRepository;
 		this.imageService = imageService;
 	}
 
-	// 상품 등록 페이지
 	@GetMapping("/product/register")
 	public String moveRegister() {
 		return "register";
 	}
 
-	// 상품 등록 처리
 	@PostMapping("/product/register")
-	public String registerProduct(@Valid @RequestBody RequestProductDto productDto,
-	                              @Valid @RequestBody MultipartFile file, HttpServletRequest request) throws Exception {
+	public String registerProduct(@ModelAttribute RequestProductDto productDto) throws IOException {
+		Product product = productRepository.save(productDto.toEntity());
+		if (!productDto.getFile().isEmpty()) {
+			product.setLocation(Image.builder()
+					.imageName(productDto.getFile().getOriginalFilename())
+					.location(ImageUploadUtils.uploadedImage(productDto.getFile()))
+					.productId(product.getProductId())
+					.build().getLocation());
+			productRepository.save(product);
+		}
 
-		return "redirect:/product/details/" + imageService.imageSave(Image.builder()
-				.productId(productRepository.save(productDto.toEntity()).getProductId())
-				.imageName(file.getOriginalFilename())
-				.location(ImageUploadUtils.uploadFile(file, request))
-				.build())
-				.getProductId();
+		return "redirect:/product/details/" + product.getProductId();
 	}
 
 	@GetMapping("/product/upload")
@@ -64,25 +58,26 @@ public class ProductController {
 		return "redirect:/product/details/" + productRepository.save(product).getProductId();
 	}
 
-	@GetMapping("/product/details/{id}")
-	public String getProductById(@PathVariable Long id, Model model) {
-		model.addAttribute("product", productRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Product", "id", id)));
+	@GetMapping("/product/details/{productId}")
+	public String getProductById(@PathVariable Long productId, Model model) {
+		model.addAttribute("product", productRepository.findById(productId)
+				.orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId)));
 		return "details";
 	}
 
-	@GetMapping("/product/update/{id}")
-	public String moveUpdate(@PathVariable Long id, Model model) {
-		model.addAttribute("product", productRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Product", "id", id)));
+	@GetMapping("/product/update/{productId}")
+	public String moveUpdate(@PathVariable Long productId, Model model) {
+		model.addAttribute("product", productRepository.findById(productId)
+				.orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId)));
 		return "update";
 	}
 
-	@PostMapping("/product/update/{id}")
-	public String updateProduct(@PathVariable(value = "id") Long id, @Valid @RequestBody Product productDetails) {
+	@PostMapping("/product/update/{productId}")
+	public String updateProduct(@PathVariable(value = "productId") Long productId,
+	                            @Valid @RequestBody Product productDetails) {
 
-		Product product = productRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Product", "id", id));
+		Product product = productRepository.findById(productId)
+				.orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
 
 		product.setProductName(productDetails.getProductName());
 		product.setDescription(productDetails.getDescription());
@@ -90,11 +85,11 @@ public class ProductController {
 		return "redirect:/product/details/" + productRepository.save(product).getProductId();
 	}
 
-	@GetMapping("/product/delete/{id}")
-	public ResponseEntity<?> deleteProduct(@PathVariable(value = "id") Long id) {
+	@GetMapping("/product/delete/{productId}")
+	public ResponseEntity<?> deleteProduct(@PathVariable(value = "productId") Long productId) {
 
-		Product product = productRepository.findById(id)
-				.orElseThrow(() -> new ResourceNotFoundException("Product", "id", id));
+		Product product = productRepository.findById(productId)
+				.orElseThrow(() -> new ResourceNotFoundException("Product", "productId", productId));
 
 		productRepository.delete(product);
 

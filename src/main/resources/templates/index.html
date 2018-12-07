@@ -10,13 +10,13 @@
 	</header>
 	<div class="posts">
 		<article th:each="product : ${products}">
-			<a th:href="'/product/details/' + ${product.id}" class="image">
-				<img th:src="${product.image}" alt=""/>
+			<a th:href="'/product/details/' + ${product.productId}" class="image">
+				<img th:src="${product.location}" alt=""/>
 			</a>
 			<div class="col-6 col-12-small">
 				<ul class="actions stacked">
 					<li>
-						<a th:href="'/product/details/' + ${product.id}" th:text="${product.name}" class="button fit"></a>
+						<a th:href="'/product/details/' + ${product.productId}" th:text="${product.productName}" class="button fit"></a>
 					</li>
 				</ul>
 			</div>

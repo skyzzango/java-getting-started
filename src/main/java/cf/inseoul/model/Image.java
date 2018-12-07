@@ -25,13 +25,13 @@ public class Image implements Serializable {
 	private Long imageId;
 
 	@Column(nullable = false)
-	private Long productId;
-
-	@Column(nullable = false)
 	private String imageName;
 
 	@Column(nullable = false)
 	private String location;
+
+	@Column()
+	private Long productId;
 
 	@Column()
 	private String type;

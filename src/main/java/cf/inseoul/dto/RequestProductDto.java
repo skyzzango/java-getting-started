@@ -4,32 +4,39 @@ import cf.inseoul.model.Product;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
 public class RequestProductDto {
 
-	private Long categoryMainId;
-	private Long categorySubId;
+	private String categoryMain;
+	private String categorySub;
 	private String productName;
-	private String description;
+	private MultipartFile file;
 	private int price;
+	private String description;
+	private String location;
 
 	@Builder
-	public RequestProductDto(Long categoryMainId, Long categorySubId, String productName, String description, int price) {
-		this.categoryMainId = categoryMainId;
-		this.categorySubId = categorySubId;
+	public RequestProductDto(String categoryMain, String categorySub, String productName,
+	                         MultipartFile file, int price, String description, String location) {
+		this.categoryMain = categoryMain;
+		this.categorySub = categorySub;
 		this.productName = productName;
-		this.description = description;
+		this.file = file;
 		this.price = price;
+		this.description = description;
+		this.location = location;
 	}
 
 	public Product toEntity() {
 		return Product.builder()
-				.categoryMainId(categoryMainId)
-				.categorySubId(categorySubId)
+				.categoryMain(categoryMain)
+				.categorySub(categorySub)
 				.productName(productName)
 				.description(description)
+				.location(location)
 				.price(price)
 				.build();
 	}

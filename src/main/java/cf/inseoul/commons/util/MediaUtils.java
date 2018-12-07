@@ -30,5 +30,4 @@ class MediaUtils {
 	static String getFormatName(String fileName) {
 		return fileName.substring(fileName.lastIndexOf('.') + 1).toUpperCase();
 	}
-
 }

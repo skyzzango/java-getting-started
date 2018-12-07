@@ -3,6 +3,7 @@ package cf.inseoul.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -14,6 +15,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "product")
+@NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 @JsonIgnoreProperties(value = {"createdAt", "updatedAt"}, allowGetters = true)
 @Getter
@@ -28,16 +30,16 @@ public class Product implements Serializable {
 	private String productName;
 
 	@Column(nullable = false)
-	private Long categoryMainId;
+	private String categoryMain;
 
 	@Column(nullable = false)
-	private Long categorySubId;
+	private String categorySub;
 
 	@Column(columnDefinition = "TEXT", nullable = false)
 	private String description;
 
-	@Column(nullable = false)
-	private Long imageId;
+	@Column()
+	private String location;
 
 	@Column()
 	private int price;
@@ -53,12 +55,12 @@ public class Product implements Serializable {
 	private Date updatedAt;
 
 	@Builder
-	public Product(Long productId, String productName, Long categoryMainId, Long categorySubId, String description, int price) {
-		this.productId = productId;
+	public Product(String productName, String categoryMain, String categorySub, String description, String location, int price) {
 		this.productName = productName;
-		this.categoryMainId = categoryMainId;
-		this.categorySubId = categorySubId;
+		this.categoryMain = categoryMain;
+		this.categorySub = categorySub;
 		this.description = description;
+		this.location = location;
 		this.price = price;
 	}
 

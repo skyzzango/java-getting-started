@@ -1,0 +1,148 @@
+@charset "UTF-8";
+
+a {
+	text-decoration: none !important;
+	color: inherit;
+}
+
+.nomargin {
+	margin: 0;
+}
+
+.nopadding {
+	padding: 0;
+}
+
+.none {
+	display: none;
+}
+
+.display {
+	display: block;
+}
+
+.boxnoborder {
+	border: none;
+	margin: 20px 0;
+	padding: 10px;
+	float: left;
+}
+
+.textright {
+	text-align: right;
+}
+
+/* 이미지 리사이즈 */
+Section .content img {
+	max-width: 800px;
+	height: auto;
+}
+
+.inint {
+	padding: 0;
+	margin: 0;
+}
+
+.contenttd img {
+	display: none;
+}
+
+#menu,
+Section,
+input {
+	font-family: "Roboto Slab", 'Noto Sans KR', 'Open Sans', sans-serif;
+}
+
+.elements {
+	font-family: 'Noto Sans KR', 'Open Sans', sans-serif;
+}
+
+Section {
+	top-margin: 30px;
+}
+
+Section .preview > .box {
+	height: 200px;
+	text-align: center;
+	padding-top: 85px;
+	background-color: #f4f4f4;
+	color: #AAA;
+}
+
+Section .file {
+	position: relative;
+}
+
+Section .file input {
+	display: none;
+}
+
+Section .filename {
+	color: #AAA;
+	position: absolute;
+	left: 130px;
+	bottom: 10px;
+}
+
+Section .fileUploadBtn {
+	position: absolute;
+	bottom: 10px;
+}
+
+Section .previewImg {
+	width: 100%;
+	height: 100%;
+}
+
+
+/* - - - - - - - - - - - - - -ProductDetail.jsp */
+Section .infobox {
+	padding: 30px 10px;
+}
+
+Section .imgSection,
+Section .infoSection {
+	float: left;
+	overflow: hidden;
+}
+
+.imgSection {
+	width: 450px;
+	height: 450px;
+	border: 1px solid #DDD;
+
+}
+
+.infoSection {
+	padding: 10px 50px;
+}
+
+Section .infoSection h2 /*가격*/
+{
+	font-weight: lighter;
+	margin: 70px 0 30px;
+}
+
+Section .infoSection h1 /*상품명*/
+{
+	font-weight: lighter;
+	letter-spacing: -1px;
+	padding-bottom: 10px;
+}
+
+Section .infoSection span {
+	display: block;
+	width: 100px;
+	height: 5px;
+	background-color: #f56a6a;
+}
+
+Section .box {
+	margin-top: 30px;
+	overflow: hidden;
+}
+
+
+Section .content {
+	padding: 30px;
+}

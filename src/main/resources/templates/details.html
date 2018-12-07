@@ -2,11 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'details')}">
 <body>
 
+<!-- Section -->
+<section class="init">
+
+	<div class="boxnoborder col-6">
+		<h4>
+			<i class="fas fa-tags" th:text="${product}"></i>
+			<small>
+				<i class="fas fa-chevron-right" th:text="${product}"></i>
+			</small>
+		</h4>
+	</div>
+	<div class="box boxnoborder textright col-6">
+		<a th:href="@{/product/update/${product.productId}}">수정</a>
+		<a th:href="@{/product/delate/${product.productId}}">삭제</a>
+	</div>
+
+	<div class="col-12 infobox boxnoborder init">
+
+		<div class="imgSection col-6"></div>
+
+		<div class="infoSection col-6">
+			<h1>${product.name}</h1>
+			<span class="line"></span>
+			<h2>
+				<small><i class="fas fa-won-sign"></i></small>
+				<span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 3, 'POINT')}"></span>
+			</h2>
+
+			<button class="large"><i class="fas fa-cart-plus"></i> ADD</button>
+			<button class="large primary"><i class="fas fa-credit-card"></i> BUY</button>
+		</div>
+	</div>
+
+	<div class="col-12 box box boxnoborder">
+		<h5><i class="fas fa-gift"></i> 상품 상세 정보</h5>
+	</div>
+
+	<div class="content box col-12" th:text="${product.description}"></div>
+
+</section><!-- .section -->
+
 <!-- Banner -->
 <section id="banner">
 	<div class="content">
 		<header>
-			<h1 th:text="${product.name}"></h1>
+			<h1 th:text="${product.productName}"></h1>
 			<p>소제목?</p>
 		</header>
 		<p th:text="${product.description}"></p>
@@ -16,112 +57,8 @@
 		</ul>
 	</div>
 	<span class="image object">
-		<img th:src="${product.image}" alt=""/>
+		<img th:src="${product.imageId}" alt=""/>
 	</span>
-</section>
-
-<!-- Section -->
-<section>
-	<header class="major">
-		<h2>Erat lacinia</h2>
-	</header>
-	<div class="features">
-		<article>
-			<span class="icon fa-diamond"></span>
-			<div class="content">
-				<h3>Portitor ullamcorper</h3>
-				<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
-					facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-			</div>
-		</article>
-		<article>
-			<span class="icon fa-paper-plane"></span>
-			<div class="content">
-				<h3>Sapien veroeros</h3>
-				<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
-					facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-			</div>
-		</article>
-		<article>
-			<span class="icon fa-rocket"></span>
-			<div class="content">
-				<h3>Quam lorem ipsum</h3>
-				<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
-					facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-			</div>
-		</article>
-		<article>
-			<span class="icon fa-signal"></span>
-			<div class="content">
-				<h3>Sed magna finibus</h3>
-				<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam
-					facilisis ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-			</div>
-		</article>
-	</div>
-</section>
-
-<!-- Section -->
-<section>
-	<header class="major">
-		<h2>Ipsum sed dolor</h2>
-	</header>
-	<div class="posts">
-		<article>
-			<a href="#" class="image"><img src="/images/pic01.jpg" alt=""/></a>
-			<h3>Interdum aenean</h3>
-			<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis
-				ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-			<ul class="actions">
-				<li><a href="#" class="button">More</a></li>
-			</ul>
-		</article>
-		<article>
-			<a href="#" class="image"><img src="/images/pic02.jpg" alt=""/></a>
-			<h3>Nulla amet dolore</h3>
-			<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis
-				ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-			<ul class="actions">
-				<li><a href="#" class="button">More</a></li>
-			</ul>
-		</article>
-		<article>
-			<a href="#" class="image"><img src="/images/pic03.jpg" alt=""/></a>
-			<h3>Tempus ullamcorper</h3>
-			<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis
-				ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-			<ul class="actions">
-				<li><a href="#" class="button">More</a></li>
-			</ul>
-		</article>
-		<article>
-			<a href="#" class="image"><img src="/images/pic04.jpg" alt=""/></a>
-			<h3>Sed etiam facilis</h3>
-			<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis
-				ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-			<ul class="actions">
-				<li><a href="#" class="button">More</a></li>
-			</ul>
-		</article>
-		<article>
-			<a href="#" class="image"><img src="/images/pic05.jpg" alt=""/></a>
-			<h3>Feugiat lorem aenean</h3>
-			<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis
-				ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-			<ul class="actions">
-				<li><a href="#" class="button">More</a></li>
-			</ul>
-		</article>
-		<article>
-			<a href="#" class="image"><img src="/images/pic06.jpg" alt=""/></a>
-			<h3>Amet varius aliquam</h3>
-			<p>Aenean ornare velit lacus, ac varius enim lorem ullamcorper dolore. Proin aliquam facilisis
-				ante interdum. Sed nulla amet lorem feugiat tempus aliquam.</p>
-			<ul class="actions">
-				<li><a href="#" class="button">More</a></li>
-			</ul>
-		</article>
-	</div>
 </section>
 
 </body>

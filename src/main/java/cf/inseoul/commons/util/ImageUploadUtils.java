@@ -18,14 +18,15 @@ import java.util.UUID;
 public class ImageUploadUtils {
 
 	private ImageUploadUtils() {
+
 		throw new IllegalStateException("ImageUploadUtils class");
 	}
 
 	// 파일 업로드 처리
-	public static String uploadFile(MultipartFile file, HttpServletRequest request) throws Exception {
+	public static String uploadFile(MultipartFile sourceFile, HttpServletRequest request) throws Exception {
 
-		String originalFileName = file.getOriginalFilename(); // 파일명
-		byte[] fileData = file.getBytes();  // 파일 데이터
+		String originalFileName = sourceFile.getOriginalFilename(); // 파일명
+		byte[] fileData = sourceFile.getBytes();  // 파일 데이터
 
 		// 1. 파일명 중복 방지 처리
 		String uuidFileName = getUuidFileName(originalFileName);
@@ -78,6 +79,7 @@ public class ImageUploadUtils {
 		// 이미지 파일 X
 		fileName = fileName.substring(fileName.indexOf('_') + 1); // UUID 제거
 		httpHeaders.setContentType(MediaType.APPLICATION_OCTET_STREAM); // 다운로드 MIME 타입 설정
+
 		// 파일명 한글 인코딩처리
 		httpHeaders.add(
 				"Content-Disposition",
@@ -89,13 +91,8 @@ public class ImageUploadUtils {
 
 	// 기본 경로 추출
 	public static String getRootPath(String fileName, HttpServletRequest request) {
-
-		String rootPath = "/upload";
-		MediaType mediaType = MediaUtils.getMediaType(fileName); // 파일타입 확인
-		if (mediaType != null)
-			return request.getSession().getServletContext().getRealPath(rootPath + "/images"); // 이미지 파일 경로
-
-		return request.getSession().getServletContext().getRealPath(rootPath + "/files"); // 일반파일 경로
+		return request.getSession().getServletContext()
+				.getRealPath("/upload" + (MediaUtils.getMediaType(fileName) != null ? "/images" : "/files"));
 	}
 
 	// 날짜 폴더명 추출
@@ -103,9 +100,12 @@ public class ImageUploadUtils {
 
 		Calendar calendar = Calendar.getInstance();
 		String yearPath = File.separator + calendar.get(Calendar.YEAR);
-		String monthPath =
-				yearPath + File.separator + new DecimalFormat("00").format(calendar.get(Calendar.MONTH) + 1L);
-		String datePath = monthPath + File.separator + new DecimalFormat("00").format(calendar.get(Calendar.DATE));
+
+		String monthPath = yearPath + File.separator + new DecimalFormat("00")
+				.format(calendar.get(Calendar.MONTH) + 1L);
+
+		String datePath = monthPath + File.separator + new DecimalFormat("00")
+				.format(calendar.get(Calendar.DATE));
 
 		makeDateDir(uploadPath, yearPath, monthPath, datePath);
 
@@ -116,7 +116,9 @@ public class ImageUploadUtils {
 	private static void makeDateDir(String uploadPath, String... paths) {
 
 		// 날짜별 폴더가 이미 존재하면 메서드 종료
-		if (new File(uploadPath + paths[paths.length - 1]).exists()) return;
+		if (new File(uploadPath + paths[paths.length - 1]).exists()) {
+			return;
+		}
 
 		for (String path : paths) {
 			File dirPath = new File(uploadPath + path);
@@ -132,7 +134,7 @@ public class ImageUploadUtils {
 
 	// 파일명 중복방지 처리
 	private static String getUuidFileName(String originalFileName) {
-		return UUID.randomUUID().toString() + "_" + originalFileName;
+		return UUID.randomUUID().toString() + '_' + originalFileName;
 	}
 
 	// 썸네일 이미지 생성

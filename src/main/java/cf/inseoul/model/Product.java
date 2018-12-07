@@ -1,6 +1,7 @@
 package cf.inseoul.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -21,16 +22,25 @@ public class Product implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long productId;
 
 	@Column(nullable = false)
-	private String name;
+	private String productName;
 
-	@Column(length = 99999, nullable = false)
+	@Column(nullable = false)
+	private Long categoryMainId;
+
+	@Column(nullable = false)
+	private Long categorySubId;
+
+	@Column(columnDefinition = "TEXT", nullable = false)
 	private String description;
 
 	@Column(nullable = false)
-	private String image;
+	private Long imageId;
+
+	@Column()
+	private int price;
 
 	@Column(nullable = false, updatable = false)
 	@Temporal(TemporalType.TIMESTAMP)
@@ -41,6 +51,16 @@ public class Product implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
 	private Date updatedAt;
+
+	@Builder
+	public Product(Long productId, String productName, Long categoryMainId, Long categorySubId, String description, int price) {
+		this.productId = productId;
+		this.productName = productName;
+		this.categoryMainId = categoryMainId;
+		this.categorySubId = categorySubId;
+		this.description = description;
+		this.price = price;
+	}
 
 	// Getters and Setters ... (Omitted for brevity)
 }

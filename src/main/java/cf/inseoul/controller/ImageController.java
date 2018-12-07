@@ -73,7 +73,7 @@ public class ImageController {
 
 		try {
 			ImageUploadUtils.deleteFile(fileName, request);
-			imageRepository.deleteByName(fileName);
+			imageRepository.deleteByImageName(fileName);
 			entity = new ResponseEntity<>("DELETED", HttpStatus.OK);
 		} catch (Exception e) {
 			log.error("exception: {}", e);

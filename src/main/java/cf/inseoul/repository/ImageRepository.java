@@ -11,5 +11,5 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
 
 	List<Image> findByProductIdOrderByUpdatedAtDesc(Long productId);
 
-	void deleteByName(String name);
+	void deleteByImageName(String name);
 }

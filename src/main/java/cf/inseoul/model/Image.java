@@ -1,6 +1,7 @@
 package cf.inseoul.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.CreatedDate;
@@ -21,21 +22,21 @@ public class Image implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long imageId;
 
 	@Column(nullable = false)
 	private Long productId;
 
 	@Column(nullable = false)
-	private String name;
+	private String imageName;
 
 	@Column(nullable = false)
 	private String location;
 
-	@Column(nullable = false)
+	@Column()
 	private String type;
 
-	@Column(nullable = false)
+	@Column()
 	private String size;
 
 	@Column(nullable = false, updatable = false)
@@ -47,6 +48,13 @@ public class Image implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@LastModifiedDate
 	private Date updatedAt;
+
+	@Builder
+	public Image(Long productId, String imageName, String location) {
+		this.productId = productId;
+		this.imageName = imageName;
+		this.location = location;
+	}
 
 	// Getters and Setters ... (Omitted for brevity)
 }

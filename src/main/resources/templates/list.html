@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'list')}">
+
+<body>
+
+<!-- Section -->
+<section>
+	<header class="major">
+		<h3>
+			<small><i class="fas fa-list-ul"></i></small>
+			상품 목록
+		</h3>
+	</header>
+	<div class="table-wrapper">
+		<table>
+			<thead>
+			<tr>
+				<th>No.</th>
+				<th>카테고리</th>
+				<th>상품명</th>
+				<th>가격</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr th:each="product : ${products}">
+				<td th:text="${product.productId}"></td>
+				<td>
+					<span th:text="${product.categoryMain}"></span>
+					<small><i class="fas fa-chevron-right"></i></small>
+					<span th:text="${product.categorySub}"></span>
+				</td>
+				<td><a th:href="'/product/details/' + ${product.productId}" th:text="${product.productName}"></a></td>
+				<td th:text="${#numbers.formatCurrency(product.price)}"></td>
+			</tr>
+			</tbody>
+		</table>
+		<a th:href="@{/product/register}" class="button primary">상품 등록</a>
+	</div>
+</section><!-- .section -->
+
+</body>
+</html>

@@ -5,30 +5,29 @@
 
 <!-- Section -->
 <section class="init">
-
 	<div class="boxnoborder col-6">
 		<h4>
 			<i class="fas fa-tags" th:text="${product.categoryMain}"></i>
-			<small>
-				<i class="fas fa-chevron-right" th:text="${product.categorySub}"></i>
-			</small>
+			<i class="fas fa-chevron-right" th:text="${product.categorySub}"></i>
 		</h4>
 	</div>
 	<div class="box boxnoborder textright col-6">
-		<a th:href="@{/product/update/${product.productId}}">수정</a>
-		<a th:href="@{/product/delate/${product.productId}}">삭제</a>
+		<a th:href="'/product/update/' + ${product.productId}"> 수정</a>
+		<a th:href="'/product/delete/' + ${product.productId}"> 삭제</a>
 	</div>
 
 	<div class="col-12 infobox boxnoborder init">
 
-		<div class="imgSection col-6" th:style="@{background-image: url(${product.location}); background-size: cover;}"></div>
+		<!--<div class="imgSection col-6"></div>-->
+		<div class="imgSection col-6"
+		     th:style="'background-image: url(&quot' + ${product.location} + '&quot); background-size: cover;'"></div>
 
 		<div class="infoSection col-6">
 			<h1 th:text="${product.productName}"></h1>
 			<span class="line"></span>
 			<h2>
-				<small><i class="fas fa-won-sign"></i></small>
-				<span th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 3, 'POINT')}"></span>
+				<small><i class="fas fa-won-sign"
+				          th:text="${#numbers.formatDecimal(product.price, 0, 'COMMA', 3, 'POINT')}"></i></small>
 			</h2>
 
 			<button class="large"><i class="fas fa-cart-plus"></i> ADD</button>
@@ -37,32 +36,12 @@
 	</div>
 
 	<!-- Break -->
-	<script th:src="@{https://cdn.ckeditor.com/4.11.1/standard-all/ckeditor.js}"></script>
 	<div class="col-12 box box boxnoborder">
 		<h5><i class="fas fa-gift"></i> 상품 상세 정보</h5>
 	</div>
 
-	<div class="content box col-12" th:text="${product.description}"></div>
-
+	<div class="content box col-12" th:utext="${product.description}"></div>
 </section><!-- .section -->
-
-<!-- Banner -->
-<section id="banner">
-	<div class="content">
-		<header>
-			<h1 th:text="${product.productName}"></h1>
-			<p>소제목?</p>
-		</header>
-		<p th:text="${product.description}"></p>
-		<ul class="actions">
-			<li><a href="#" class="button big">ADD</a></li>
-			<li><a href="#" class="button big">BUY</a></li>
-		</ul>
-	</div>
-	<span class="image object">
-		<img th:src="${product.location}" alt=""/>
-	</span>
-</section>
 
 </body>
 </html>

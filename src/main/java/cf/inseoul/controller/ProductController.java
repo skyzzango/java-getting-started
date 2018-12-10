@@ -1,12 +1,12 @@
 package cf.inseoul.controller;
 
-import cf.inseoul.commons.util.ImageUploadUtils;
 import cf.inseoul.dto.RequestProductDto;
 import cf.inseoul.exception.ResourceNotFoundException;
 import cf.inseoul.model.Image;
 import cf.inseoul.model.Product;
+import cf.inseoul.repository.ImageRepository;
 import cf.inseoul.repository.ProductRepository;
-import cf.inseoul.service.ImageService;
+import cf.inseoul.repository.StorageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -14,18 +14,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.io.IOException;
 
 @Controller
 public class ProductController {
 
+	private final ImageRepository imageRepository;
 	private final ProductRepository productRepository;
-	private final ImageService imageService;
+	private final StorageRepository storageRepository;
 
 	@Autowired
-	public ProductController(ProductRepository productRepository, ImageService imageService) {
+	public ProductController(ImageRepository imageRepository, ProductRepository productRepository, StorageRepository storageRepository) {
+		this.imageRepository = imageRepository;
 		this.productRepository = productRepository;
-		this.imageService = imageService;
+		this.storageRepository = storageRepository;
 	}
 
 	@GetMapping("/product/register")
@@ -34,14 +35,13 @@ public class ProductController {
 	}
 
 	@PostMapping("/product/register")
-	public String registerProduct(@ModelAttribute RequestProductDto productDto) throws IOException {
+	public String registerProduct(@ModelAttribute RequestProductDto productDto) {
 		Product product = productRepository.save(productDto.toEntity());
 		if (!productDto.getFile().isEmpty()) {
-			product.setLocation(Image.builder()
-					.imageName(productDto.getFile().getOriginalFilename())
-					.location(ImageUploadUtils.uploadedImage(productDto.getFile()))
-					.productId(product.getProductId())
-					.build().getLocation());
+			Image image = storageRepository.store(productDto.getFile());
+			image.setProductId(product.getProductId());
+			imageRepository.save(image);
+			product.setLocation(image.getLocation());
 			productRepository.save(product);
 		}
 
@@ -94,5 +94,11 @@ public class ProductController {
 		productRepository.delete(product);
 
 		return ResponseEntity.ok().build();
+	}
+
+	@GetMapping("/product/list")
+	public String getProductList(Model model) {
+		model.addAttribute("products", productRepository.findAllByOrderByProductIdDesc());
+		return "list";
 	}
 }

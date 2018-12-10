@@ -1,7 +1,6 @@
 package cf.inseoul.controller;
 
 import cf.inseoul.repository.ProductRepository;
-import cf.inseoul.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,12 +9,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class MainController {
 
-	private final ProductService productService;
 	private final ProductRepository productRepository;
 
 	@Autowired
-	public MainController(ProductService productService, ProductRepository productRepository) {
-		this.productService = productService;
+	public MainController(ProductRepository productRepository) {
 		this.productRepository = productRepository;
 	}
 
@@ -45,9 +42,9 @@ public class MainController {
 		return "elements";
 	}
 
-	@GetMapping("/db")
-	String DBList(Model model) {
+	@GetMapping("/dbList")
+	public String dbList(Model model) {
 		model.addAttribute("products", productRepository.findAll());
-		return "db";
+		return "dbList";
 	}
 }

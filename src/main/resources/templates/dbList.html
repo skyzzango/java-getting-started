@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/layout :: layout (~{::body},'dbList')}">
+
+<body>
+
+<div class="container">
+	<h1>Database Output</h1>
+	<ul>
+		<li th:each="product : ${products}">
+			<span th:text="${product.productId} + ' : ' + ${product.productName} + ' : ' + ${product.createdAt}"></span>
+		</li>
+	</ul>
+</div>
+
+</body>
+</html>

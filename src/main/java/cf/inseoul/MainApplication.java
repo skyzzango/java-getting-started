@@ -16,17 +16,31 @@
 
 package cf.inseoul;
 
+import cf.inseoul.config.StorageProperties;
+import cf.inseoul.repository.StorageRepository;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.stereotype.Controller;
 
 @Controller
 @EnableJpaAuditing
+@EnableConfigurationProperties(StorageProperties.class)
 @SpringBootApplication
 public class MainApplication {
 
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		SpringApplication.run(MainApplication.class, args);
+	}
+
+	@Bean
+	CommandLineRunner init(StorageRepository storageRepository) {
+		return (args -> {
+//			storageRepository.deleteAll();
+			storageRepository.init();
+		});
 	}
 }
